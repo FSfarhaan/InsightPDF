@@ -1,7 +1,9 @@
 import React from 'react'
-import { FolderIcon, LayoutDashboard, MessageCircle, Activity, GitGraph } from 'lucide-react';
+import { FolderIcon, LayoutDashboard, MessageCircle, Activity, GitGraph, Link2 } from 'lucide-react';
+import { Link, useParams } from 'react-router-dom';
 
 const Sidebar = () => {
+    const params = useParams();
     const storageData = [
       { label: "Photo", size: "11 GB", color: "bg-blue-500" },
       { label: "Video", size: "19 GB", color: "bg-red-500" },
@@ -15,22 +17,27 @@ const Sidebar = () => {
         <div className="w-9 h-9 md:mr-3 mr-2 border bg-purple-950 border-gray-600 p-2 rounded-full">
               <img src="/devflow_logo.png" alt="Devflow Logo" />
         </div>
-          <span className="text-xl font-semibold">Devflow</span>
+          <span className="text-xl font-semibold text-black">Devflow</span>
         </div>
   
         <div className="space-y-2">
-          {[
-             { label: "Dashboard", icon: <LayoutDashboard /> },  // Dashboard icon
-             { label: "Chatbots", icon: <MessageCircle /> },  // Chat or message icon
-             { label: "Knowledge graph", icon: <GitGraph /> },  // Graph-related icon
-             { label: "Predictive analysis", icon: <Activity /> }
-          ].map(({ label, icon }) => (
-            <button key={label} className="w-full text-gray-700 p-2 rounded-lg flex items-center">
-              {React.cloneElement(icon, { className: "w-5 h-5 mr-2" })}
-              {label}
-            </button>
-          ))}
-        </div>
+            {[
+                { label: "Dashboard", icon: <LayoutDashboard />, path: "/" },
+                { label: "Chatbots", icon: <MessageCircle />, path: "/chat" },
+                { label: "Knowledge Graph", icon: <GitGraph />, path: "/knowledge" },
+                { label: "Predictive Analysis", icon: <Activity />, path: "/analysis" },
+                { label: "Corelations", icon: <Link2 />, path: "/corelations" }
+            ].map(({ label, icon, path }) => (
+                <Link
+                key={label}
+                to={path}
+                className={`w-full text-gray-700 p-2 rounded-lg flex items-center hover:bg-gray-200 transition ${params === path ? "bg-purple-800 text-white" : ""}`}
+                >
+                {React.cloneElement(icon, { className: "w-5 h-5 mr-2" })}
+                {label}
+                </Link>
+            ))}
+            </div>
   
         <div className="mt-8">
           <h3 className="text-gray-500 mb-2">Folders</h3>

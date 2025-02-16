@@ -1,21 +1,33 @@
-import ChatScreen from './pages/Chatscreen'
-import Sidebar from './component/Sidebar'
-import KnowledgeGraph from './pages/KnowledgeGraphScreen'
-import Dashboard from './pages/Dashboard'
-import StatisticsDashboard from './pages/StatisticsDashboard'
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { lazy } from "react";
+import Sidebar from "./component/Sidebar";
+
+
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Chatscreen = lazy(() => import("./pages/Chatscreen"));
+const KnowledgeGraphScreen = lazy(() => import("./pages/KnowledgeGraphScreen"));
+const Statistics = lazy(() => import("./pages/StatisticsDashboard"));
+const Corelations = lazy(() => import("./pages/Corelations"));
 
 function App() {
 
   return (
-    <div className='flex'>
-      <Sidebar />
-      <div className='w-full'>
-        <KnowledgeGraph />
-        {/* <StatisticsDashboard /> */}
-        {/* <ChatScreen /> */}
-        {/* <Dashboard /> */}
+    <Router>
+      <div className='flex'>
+        <Sidebar />
+        <div className='w-full'>
+        <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/chat" element={<Chatscreen />} />
+              <Route path="/knowledge" element={<KnowledgeGraphScreen />} />
+              <Route path="/analysis" element={<Statistics />} />
+              <Route path="/corelations" element={<Corelations/>} />
+
+              <Route path="*" element={<h1 className="text-center mt-10">404 - Not Found</h1>} />
+            </Routes>
+        </div>
       </div>
-    </div>
+    </Router>
   )
 }
 

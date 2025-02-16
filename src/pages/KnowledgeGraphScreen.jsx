@@ -1,132 +1,74 @@
-import React, { useState } from "react";
-import { Upload, Button, Select, message, Card } from "antd";
-import { InboxOutlined, CheckCircleOutlined, FileTextOutlined } from "@ant-design/icons";
-import { motion } from "framer-motion";
-
-const { Option } = Select;
+import React, { useState, useEffect } from "react";
+import UploadModal from "../component/UploadModal";
+import { Upload, RefreshCcw } from "lucide-react";
 
 const KnowledgeGraph = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [uploadedFile, setUploadedFile] = useState(null);
-  const [processing, setProcessing] = useState(false);
-  const [showPreview, setShowPreview] = useState(false);
-  const [storedFiles, setStoredFiles] = useState(["Document1.pdf", "ResearchPaper.pdf", "GraphData.pdf"]);
+  const [htmlContent, setHtmlContent] = useState("");
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const [file, setFile] = useState(null);
 
-  const handleSelectChange = (value) => {
-    setSelectedFile(value);
-    setUploadedFile(null);
-    message.success(`Selected: ${value}`);
-  };
-
-  const handleUpload = ({ file }) => {
-    setUploadedFile(file.name);
-    setSelectedFile(null);
-    setStoredFiles((prev) => [...prev, file.name]);
-    message.success(`${file.name} uploaded successfully!`);
-  };
-
-  const handleGenerate = () => {
-    if (!selectedFile && !uploadedFile) {
-      message.warning("Please select or upload a file first!");
-      return;
-    }
-    setProcessing(true);
-    setTimeout(() => {
-      setProcessing(false);
-      setShowPreview(true);
-      message.success("Knowledge graph generated successfully!");
-    }, 2000);
+  const handleRefreshKnowledge = () => {
+    fetch(
+      "https://e226-2409-40c0-100c-34f2-8caf-983a-a8f8-5c63.ngrok-free.app/graph",
+      {
+        headers: {
+          "ngrok-skip-browser-warning": "true",
+        },
+      }
+    )
+      .then((response) => response.text()) // Convert response to text
+      .then((data) => setHtmlContent(data)) // Store HTML in state
+      .catch((error) => console.error("Error fetching HTML:", error));
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-start justify-start bg-white px-12 py-20">
-      <div className="w-full max-w-8xl  rounded-2xl p-12 flex flex-col space-y-12">
-        <motion.h1
-          className="text-6xl font-extrabold text-left text-gray-900"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          📚 Knowledge Graph Generator
-        </motion.h1>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <motion.div
-            className="p-16 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-          >
-            <label className="block text-gray-800 font-semibold mb-4">📌 Select a Stored File:</label>
-            <Select placeholder="Choose a file" className="w-full" onChange={handleSelectChange}>
-              {storedFiles.map((file) => (
-                <Option key={file} value={file}>{file}</Option>
-              ))}
-            </Select>
-          </motion.div>
-
-          <motion.div
-            className="p-10 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-          >
-            <label className="block text-gray-800 font-semibold mb-6">📤 Upload a New File:</label>
-            <Upload beforeUpload={(file) => { handleUpload({ file }); return false; }} showUploadList={false}>
-              <Button type="primary" className="w-full bg-blue-600 hover:bg-blue-700 transition duration-200">Upload File</Button>
-            </Upload>
-            {uploadedFile && (
-              <motion.div
-                className="mt-3 p-3 bg-green-100 rounded-md flex items-start gap-2 text-green-800 border border-green-400"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-              >
-                <CheckCircleOutlined className="text-green-600" />
-                <span><b>{uploadedFile}</b> uploaded successfully!</span>
-              </motion.div>
-            )}
-          </motion.div>
+    <div className="text-black h-screen bg-white p-12">
+      <div className="flex justify-between">
+        <div>
+          <h1 className="text-3xl font-semibold mb-1 text-black">
+            Knowledge graph
+          </h1>
+          <p className="text-gray-500 mb-6">
+            Upload a file to render knowledge graph.
+          </p>
         </div>
 
-        <motion.div
-          className="flex justify-start"
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-        >
-          <Button
-            type="primary"
-            className="w-1/2 bg-blue-700 hover:bg-blue-800 text-lg py-10 rounded-lg shadow-md transition duration-200"
-            onClick={handleGenerate}
-            loading={processing}
+        <div className="flex justify-end items-center mb-6 space-x-4">
+          <button
+            onClick={handleRefreshKnowledge}
+            className="flex items-center px-4 py-2 bg-transparent text-purple-600 border border-purple-600 rounded-lg hover:bg-purple-500 hover:text-white transition cursor-pointer"
           >
-            Generate Knowledge Graph
-          </Button>
-        </motion.div>
+            <RefreshCcw className="w-5 h-5 mr-2" />
+            Refresh
+          </button>
 
-        <motion.div
-          className="flex justify-start"
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-        >
-          <Card className="w-full max-w-lg">
-            {!showPreview ? (
-              <div className="flex flex-col items-start justify-start p-6">
-                <img
-                  src="https://img.freepik.com/free-vector/file-folder-concept-illustration_114360-206.jpg?t=st=1739633918~exp=1739637518~hmac=c885276b51cfabcb87ae14ac7951cd58a9d354f5c6e02f795a4a9b695b5aac71&w=740"
-                  alt="Placeholder"
-                  className="rounded-md mb-4"
-                />
-                <p className="text-gray-600">Generate a graph to see the preview.</p>
-              </div>
-            ) : (
-              <div className="flex flex-col items-start justify-start p-6">
-                <h3 className="text-lg font-semibold flex items-start justify-start gap-2 mb-4 text-gray-900">
-                  <FileTextOutlined className="text-blue-600" />
-                  Knowledge Graph Preview
-                </h3>
-                <img
-                  src="https://via.placeholder.com/500x300?text=Generated+Graph"
-                  alt="Generated Graph"
-                  className="rounded-lg border border-gray-300 shadow-md"
-                />
-              </div>
-            )}
-          </Card>
-        </motion.div>
+          <button
+            onClick={() => setIsUploadModalOpen(true)}
+            className="flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-500 transition cursor-pointer"
+          >
+            <Upload className="w-5 h-5 mr-2" />
+            Upload files
+          </button>
+        </div>
       </div>
+
+      {/* <div dangerouslySetInnerHTML={{ __html: htmlContent }} className="border p-4" /> */}
+      <iframe
+        srcDoc={htmlContent} // Pass the HTML response here
+        title="Embedded HTML"
+        style={{ width: "100%", height: "600px", border: "1px solid black" }}
+        className="scrollbar-hidden"
+      />
+
+      {isUploadModalOpen && (
+        <UploadModal
+          isOpen={isUploadModalOpen}
+          onClose={() => setIsUploadModalOpen(false)}
+          showExtra={false}
+          setFile={setFile}
+          type={"knowledge"}
+        />
+      )}
     </div>
   );
 };

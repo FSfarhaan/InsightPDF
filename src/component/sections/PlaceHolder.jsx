@@ -17,7 +17,7 @@ const PlaceHolder = ({ setInputMessage }) => {
           <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mx-auto mb-6">
             <Sparkles className="w-6 h-6 text-gray-800" />
           </div>
-          <h1 className="text-7xl font-semibold mb-2 ">Talk Data to Me</h1>
+          <h1 className="text-5xl font-semibold mb-2 ">Talk Data to Me</h1>
           <p className="text-gray-600 text-xl">
             Choose a prompt below or write your own to start chatting about the pdfs data.
             If you haven't uploaded any pdf then upload it <span className='cursor-pointer text-blue-600'>here</span>
