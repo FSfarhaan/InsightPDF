@@ -2,6 +2,7 @@ import ChatScreen from './pages/Chatscreen'
 import Sidebar from './component/Sidebar'
 import KnowledgeGraph from './pages/KnowledgeGraphScreen'
 import Dashboard from './pages/Dashboard'
+import StatisticsDashboard from './pages/StatisticsDashboard'
 
 function App() {
 
@@ -10,7 +11,8 @@ function App() {
       <Sidebar />
       <div className='w-full'>
         {/* <KnowledgeGraph /> */}
-        <ChatScreen />
+        <StatisticsDashboard />
+        {/* <ChatScreen /> */}
         {/* <Dashboard /> */}
       </div>
     </div>
