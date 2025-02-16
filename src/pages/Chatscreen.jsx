@@ -7,13 +7,11 @@ import axios from "axios";
 const TalkDataInterface = () => {
   const [inputMessage, setInputMessage] = useState("");
   const [responses, setResponses] = useState([]);
-  const BACKEND_CHAT = "https://8fb4-2409-40c0-1075-4aa2-9509-7662-7dad-c6dd.ngrok-free.app/chat"
+  const BACKEND_CHAT = "https://e96b-2409-40c0-100c-34f2-403a-a081-6994-d507.ngrok-free.app/chat"
 
   const handleMessageChange = (e) => {
     setInputMessage(e.target.value);
   };
-
-  const data = "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto accusamus consectetur enim ipsam quisquam inventore corporis, sint ea, unde animi maiores optio laborum, officia dicta deleniti necessitatibus nesciunt commodi dolorem? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto accusamus consectetur enim ipsam quisquam inventore corporis, sint ea, unde animi maiores optio laborum, officia dicta deleniti necessitatibus nesciunt commodi dolorem? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto accusamus consectetur enim ipsam quisquam inventore corporis, sint ea, unde animi maiores optio laborum, officia dicta deleniti necessitatibus nesciunt commodi dolorem?"
 
   const handleResponse = () => {
     if (!inputMessage.trim()) return; // Prevent empty message
@@ -34,12 +32,7 @@ const TalkDataInterface = () => {
       setResponses((prev) => [...prev, { text: response.answer, sender: "ai" }]);
     }
 
-    // fetchResponse();
-
-    setTimeout(() => {
-      setResponses((prev) => [...prev, { text: data, sender: "ai" }])
-    }, 2000);
-
+    fetchResponse();
     
     setInputMessage("");
   };
