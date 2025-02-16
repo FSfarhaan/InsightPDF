@@ -25,7 +25,7 @@ const Sidebar = () => {
                 { label: "Dashboard", icon: <LayoutDashboard />, path: "/" },
                 { label: "Chatbots", icon: <MessageCircle />, path: "/chat" },
                 { label: "Knowledge Graph", icon: <GitGraph />, path: "/knowledge" },
-                { label: "Predictive Analysis", icon: <Activity />, path: "/predictive" },
+                { label: "Predictive Analysis", icon: <Activity />, path: "/analysis" },
                 { label: "Corelations", icon: <Link2 />, path: "/corelations" }
             ].map(({ label, icon, path }) => (
                 <Link

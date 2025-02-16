@@ -1,10 +1,11 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import { lazy } from "react";
 import Sidebar from "./component/Sidebar";
 
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Chatscreen = lazy(() => import("./pages/Chatscreen"));
 const KnowledgeGraphScreen = lazy(() => import("./pages/KnowledgeGraphScreen"));
+const Statistics = lazy(() => import("./pages/StatisticsDashboard"));
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
               <Route path="/" element={<Dashboard />} />
               <Route path="/chat" element={<Chatscreen />} />
               <Route path="/knowledge" element={<KnowledgeGraphScreen />} />
+              <Route path="/analysis" element={<Statistics />} />
 
               <Route path="*" element={<h1 className="text-center mt-10">404 - Not Found</h1>} />
             </Routes>
