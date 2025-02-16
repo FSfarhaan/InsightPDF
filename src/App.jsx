@@ -10,8 +10,8 @@ function App() {
     <div className='flex'>
       <Sidebar />
       <div className='w-full'>
-        {/* <KnowledgeGraph /> */}
-        <StatisticsDashboard />
+        <KnowledgeGraph />
+        {/* <StatisticsDashboard /> */}
         {/* <ChatScreen /> */}
         {/* <Dashboard /> */}
       </div>
