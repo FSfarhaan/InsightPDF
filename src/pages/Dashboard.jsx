@@ -9,6 +9,7 @@ import FileListingTable from "../component/FilesTable";
 
 const Dashboard = () => {
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const [file, setFile] = useState(null);
 
   return (
     <div className="flex min-h-screen bg-gray-50 p-8">
@@ -19,6 +20,7 @@ const Dashboard = () => {
         isOpen={isUploadModalOpen}
         onClose={() => setIsUploadModalOpen(false)}
         type={"dashboard"}
+        setFile={setFile}
       />
     </div>
   );

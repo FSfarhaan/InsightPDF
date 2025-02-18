@@ -9,7 +9,7 @@ const KnowledgeGraph = () => {
 
   const handleRefreshKnowledge = () => {
     fetch(
-      "https://e226-2409-40c0-100c-34f2-8caf-983a-a8f8-5c63.ngrok-free.app/graph",
+      "https://64bc-2401-4900-56f7-b9c8-a188-a1ae-745e-1f0d.ngrok-free.app/graph",
       {
         headers: {
           "ngrok-skip-browser-warning": "true",

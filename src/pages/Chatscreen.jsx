@@ -7,7 +7,7 @@ import axios from "axios";
 const TalkDataInterface = () => {
   const [inputMessage, setInputMessage] = useState("");
   const [responses, setResponses] = useState([]);
-  const BACKEND_CHAT = "https://e96b-2409-40c0-100c-34f2-403a-a081-6994-d507.ngrok-free.app/chat"
+  const BACKEND_CHAT = "http://192.168.242.94:8000/chat"
 
   const handleMessageChange = (e) => {
     setInputMessage(e.target.value);
@@ -24,11 +24,12 @@ const TalkDataInterface = () => {
     const fetchResponse = async () => {
       const payload = {
         question: inputMessage,
-        session_id: "12345",
+        session_id: "1234",
         model: "llama3-70b-8192"
       }
       const data = await axios.post(BACKEND_CHAT, payload);
       const response = data.data;
+
       setResponses((prev) => [...prev, { text: response.answer, sender: "ai" }]);
     }
 

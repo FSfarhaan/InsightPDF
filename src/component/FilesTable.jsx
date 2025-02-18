@@ -9,13 +9,13 @@ const FileListingTable = () => {
   const files = [
     {
       id: 1,
-      name: 'Design_Campaign.photo.pdf',
+      name: 'Resume_Farhaan_Shaikh.pdf',
       sharedBy: {
         name: 'Devon Lane',
         avatar: '/api/placeholder/32/32'
       },
       size: '3,0 KB',
-      modified: '11 June 2020'
+      modified: '16 Feb 2024'
     },
     {
       id: 2,
@@ -25,7 +25,7 @@ const FileListingTable = () => {
         avatar: '/api/placeholder/32/32'
       },
       size: '4,2 KB',
-      modified: '10 June 2020'
+      modified: '16 Feb 2024'
     },
     {
       id: 3,
@@ -35,7 +35,7 @@ const FileListingTable = () => {
         avatar: '/api/placeholder/32/32'
       },
       size: '2,2 KB',
-      modified: '09 June 2020'
+      modified: '16 Feb 2024'
     },
     {
       id: 4,
@@ -45,7 +45,7 @@ const FileListingTable = () => {
         avatar: '/api/placeholder/32/32'
       },
       size: '4,3 KB',
-      modified: '08 June 2020'
+      modified: '16 Feb 2024'
     },
     {
       id: 5,
@@ -55,7 +55,7 @@ const FileListingTable = () => {
         avatar: '/api/placeholder/32/32'
       },
       size: '2,7 KB',
-      modified: '07 June 2020'
+      modified: '16 Feb 2024'
     }
   ];
 
