@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import { lazy } from "react";
 import Sidebar from "./component/Sidebar";
 import Correlations from "./pages/Corelations";
+import StatisticsDashboard from "./pages/StatisticsDashboard";
 
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Chatscreen = lazy(() => import("./pages/Chatscreen"));
@@ -16,11 +17,12 @@ function App() {
         <Sidebar />
         <div className='w-full'>
         <Routes>
-              <Route path="/" element={<Dashboard />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/chat" element={<Chatscreen />} />
-              <Route path="/knowledge" element={<KnowledgeGraphScreen />} />
-              <Route path="/statistics" element={<Statistics />} />
+              <Route path="/knowledgegraph" element={<KnowledgeGraphScreen />} />
               <Route path="/corelations" element={<Correlations />} />
+              {/* <Route path="/statistics" element={<Statistics />} /> */}
+              <Route path="/statistics" element={<StatisticsDashboard />} />
 
               <Route path="*" element={<h1 className="text-center mt-10">404 - Not Found</h1>} />
             </Routes>

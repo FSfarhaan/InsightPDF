@@ -9,9 +9,9 @@ const FileListingTable = () => {
   const files = [
     {
       id: 1,
-      name: 'Resume_Farhaan_Shaikh.pdf',
+      name: 'Farhaan_Shaikh_Resume',
       sharedBy: {
-        name: 'Devon Lane',
+        name: 'Farhaan Shaikh',
         avatar: '/api/placeholder/32/32'
       },
       size: '3,0 KB',

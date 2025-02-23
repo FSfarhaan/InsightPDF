@@ -24,14 +24,16 @@ const UploadModal = ({
   const [filesData, setFilesData] = useState([]);
   const [selectedDataType, setSelectedDataType] = useState(null);
   // const BACKEND = showExtra ? "https://e96b-2409-40c0-100c-34f2-403a-a081-6994-d507.ngrok-free.app/upload-doc" : "https://e226-2409-40c0-100c-34f2-8caf-983a-a8f8-5c63.ngrok-free.app/upload"
+  const AYUSH_BACKEND = import.meta.env.VITE_PYTHON_AYUSH;
+  const SAKSHI_BACKEND = import.meta.env.VITE_PYTHON_SAKSI;
 
   const BACKEND =
     type === "dashboard"
-      ? "http://192.168.242.94:8000/upload-doc"
+      ? `${AYUSH_BACKEND}/upload-doc`
       : type === "knowledge"
-      ? "https://64bc-2401-4900-56f7-b9c8-a188-a1ae-745e-1f0d.ngrok-free.app/upload"
+      ? `${SAKSHI_BACKEND}/upload`
       : type === "stats"
-      ? "https://64bc-2401-4900-56f7-b9c8-a188-a1ae-745e-1f0d.ngrok-free.app/uploadpa"
+      ? `${SAKSHI_BACKEND}/uploadpa`
       : "";
 
   if (!isOpen) return null;

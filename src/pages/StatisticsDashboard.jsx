@@ -20,16 +20,16 @@ import {
   CartesianGrid,
 } from "recharts";
 import UploadModal from "../component/UploadModal";
+import axios from "axios";
 
 const StatisticsDashboard = () => {
-  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+    const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
-  const [chartArray, setChartArray] = useState({});
-
+    const [chartArray, setChartArray] = useState();
+    const URL = import.meta.env.VITE_PYTHON_AYUSH;
   
   useEffect(() => {
-    const fetchData = async () => {
-      // const response = await axios.get(
+    const fetchData = () => {
         const data = [
           {
               "Date": "2010-06-29",
@@ -316,13 +316,11 @@ const StatisticsDashboard = () => {
               "High": 4.264,
               "Low": 3.96
           }, ]
-      //   "https://64bc-2401-4900-56f7-b9c8-a188-a1ae-745e-1f0d.ngrok-free.app/json",
-      //   {
-      //     headers: {
-      //       "ngrok-skip-browser-warning": "true",
-      //     },
-      //   }
-      // );
+    //     const response = await axios.get(URL, {
+    //       headers: {
+    //         "ngrok-skip-browser-warning": "true",
+    //       }}
+    //      );
       setChartArray(transformData(data));
       console.log(transformData(data));
     };
@@ -380,190 +378,188 @@ const StatisticsDashboard = () => {
   ];
 
   return (
-//     <div className="p-12 bg-white min-h-screen w-full">
-//       <div className="flex justify-between">
-//         <div>
-//           <h1 className="text-3xl font-semibold mb-1 text-black">
-//             General Statistics
-//           </h1>
-//           <p className="text-gray-500 mb-6">
-//             Your data, your progress—let’s keep going!
-//           </p>
-//         </div>
+    <div className="p-12 bg-white min-h-screen w-full">
+      <div className="flex justify-between">
+        <div>
+          <h1 className="text-3xl font-semibold mb-1 text-black">
+            General Statistics
+          </h1>
+          <p className="text-gray-500 mb-6">
+            Your data, your progress—let’s keep going!
+          </p>
+        </div>
 
-//         <div className="flex justify-end items-center mb-6 space-x-4">
-//           <button
-//             onClick={() => setIsUploadModalOpen(true)}
-//             className="flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-gray-200 transition cursor-pointer"
-//           >
-//             <Upload className="w-5 h-5 mr-2" />
-//             Upload files
-//           </button>
-//         </div>
-//       </div>
+        {/* <div className="flex justify-end items-center mb-6 space-x-4">
+          <button
+            onClick={() => setIsUploadModalOpen(true)}
+            className="flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-gray-200 transition cursor-pointer"
+          >
+            <Upload className="w-5 h-5 mr-2" />
+            Upload files
+          </button>
+        </div> */}
+      </div>
 
 
-//       <div className="grid grid-cols-3 gap-6 mb-12">
-//         {statsCards.map((card, index) => (
-//           <div
-//             key={index}
-//             className={`${card.bgColor} p-6 rounded-lg text-white shadow-lg hover:scale-105 transition-transform duration-200`}
-//           >
-//             <div className="text-4xl font-bold mb-2">{card.value}</div>
-//             <div className="text-lg opacity-90">{card.title}</div>
-//           </div>
-//         ))}
-//       </div>
-//       <div className="grid grid-cols-2 gap-6">
-//         <div className="bg-white rounded-lg shadow-lg p-6 mb-4">
-//           <h3 className="font-medium text-gray-800 text-lg mb-4">
-//             Previous Year Analysis
-//           </h3>
-//           <ResponsiveContainer width="100%" height={300}>
-//             <BarChart data={[...chartArray?.transformedData, ...futurePrediction]}>
-//               <XAxis dataKey="month" tick={{ fill: "#4B5563" }} scale="band"/>
-//               <YAxis tick={{ fill: "#4B5563" }} scale="linear" domain={[0, 'auto']} tickFormatter={(value) => `₹${value}`} />
-//               <Tooltip formatter={(value) => `₹${value}`}/>
-//               <Legend />
-//               <Bar dataKey="high" fill="#6366F1" barSize={40} />
-//               <Bar dataKey="low" fill="#F87171" barSize={40} />
-//             </BarChart>
-//           </ResponsiveContainer>
-//         </div>
+      <div className="grid grid-cols-3 gap-6 mb-12">
+        {statsCards.map((card, index) => (
+          <div
+            key={index}
+            className={`${card.bgColor} p-6 rounded-lg text-white shadow-lg hover:scale-105 transition-transform duration-200`}
+          >
+            <div className="text-4xl font-bold mb-2">{card.value}</div>
+            <div className="text-lg opacity-90">{card.title}</div>
+          </div>
+        ))}
+      </div>
+      
+      <div className="grid grid-cols-2 gap-6">
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-4">
+          <h3 className="font-medium text-gray-800 text-lg mb-4">
+            Previous Year Analysis
+          </h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={[...chartArray?.transformedData, ...futurePrediction]}>
+              <XAxis dataKey="month" tick={{ fill: "#4B5563" }} scale="band"/>
+              <YAxis tick={{ fill: "#4B5563" }} scale="linear" domain={[0, 'auto']} tickFormatter={(value) => `₹${value}`} />
+              <Tooltip formatter={(value) => `₹${value}`}/>
+              <Legend />
+              <Bar dataKey="high" fill="#6366F1" barSize={40} />
+              <Bar dataKey="low" fill="#F87171" barSize={40} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
 
-//         <div className="bg-white rounded-lg shadow-lg p-6  mb-4">
-//           <div className="flex justify-between items-center mb-4">
-//             <h3 className="font-medium text-gray-800 text-lg">
-//               Yearly Dynamics 2024{" "}
-//             </h3>
-//             <div className="flex gap-4">
-//               <div className="flex items-center gap-2">
-//                 <div className="w-3 h-3 rounded-full bg-indigo-500"></div>
-//                 <span className="text-sm text-gray-700">High</span>
-//               </div>
-//               <div className="flex items-center gap-2">
-//                 <div className="w-3 h-3 rounded-full bg-red-400"></div>
-//                 <span className="text-sm text-gray-700">Low</span>
-//               </div>
-//             </div>
-//           </div>
-//           <ResponsiveContainer width="100%" height={300}>
-//             <LineChart data={chartArray?.transformedData}>
-//               <XAxis dataKey="month" tick={{ fill: "#4B5563" }} />
-//               <YAxis tick={{ fill: "#4B5563" }} />
-//               <Tooltip />
-//               <Legend />
-//               <Line
-//                 type="monotone"
-//                 dataKey="high"
-//                 stroke="#6366F1"
-//                 strokeWidth={3}
-//                 dot={{ r: 4 }}
-//               />
-//               <Line
-//                 type="monotone"
-//                 dataKey="low"
-//                 stroke="#F87171"
-//                 strokeWidth={3}
-//                 dot={{ r: 4 }}
-//               />
-//             </LineChart>
-//           </ResponsiveContainer>
-//         </div>
-//       </div>
+        <div className="bg-white rounded-lg shadow-lg p-6  mb-4">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="font-medium text-gray-800 text-lg">
+              Yearly Dynamics 2024{" "}
+            </h3>
+            <div className="flex gap-4">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-indigo-500"></div>
+                <span className="text-sm text-gray-700">High</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-400"></div>
+                <span className="text-sm text-gray-700">Low</span>
+              </div>
+            </div>
+          </div>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={chartArray?.transformedData}>
+              <XAxis dataKey="month" tick={{ fill: "#4B5563" }} />
+              <YAxis tick={{ fill: "#4B5563" }} />
+              <Tooltip />
+              <Legend />
+              <Line
+                type="monotone"
+                dataKey="high"
+                stroke="#6366F1"
+                strokeWidth={3}
+                dot={{ r: 4 }}
+              />
+              <Line
+                type="monotone"
+                dataKey="low"
+                stroke="#F87171"
+                strokeWidth={3}
+                dot={{ r: 4 }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
 
-//       <div className="grid grid-cols-2 gap-6 mb-12">
+      <div className="grid grid-cols-2 gap-6 mb-12">
         
-//         <div className="bg-white rounded-lg shadow-lg p-6 mb-4">
-//           <h3 className="text-lg font-medium text-gray-800 mb-4">
-//             Past Analysis
-//           </h3>
-//           <ResponsiveContainer width="100%" height={400}>
-//             <RadarChart outerRadius={150} data={chartArray.transformedData}>
-//               <PolarGrid />
-//               <PolarAngleAxis dataKey="month" />
-//               <PolarRadiusAxis />
-//               <Radar
-//                 name="High"
-//                 dataKey="high"
-//                 stroke="#6366F1"
-//                 fill="#6366F1"
-//                 fillOpacity={0.6}
-//               />
-//               <Radar
-//                 name="Low"
-//                 dataKey="low"
-//                 stroke="#F87171"
-//                 fill="#F87171"
-//                 fillOpacity={0.6}
-//               />
-//               <Tooltip />
-//               <Legend />
-//             </RadarChart>
-//           </ResponsiveContainer>
-//         </div>
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-4">
+          <h3 className="text-lg font-medium text-gray-800 mb-4">
+            Past Analysis
+          </h3>
+          <ResponsiveContainer width="100%" height={400}>
+            <RadarChart outerRadius={150} data={chartArray.transformedData}>
+              <PolarGrid />
+              <PolarAngleAxis dataKey="month" />
+              <PolarRadiusAxis />
+              <Radar
+                name="High"
+                dataKey="high"
+                stroke="#6366F1"
+                fill="#6366F1"
+                fillOpacity={0.6}
+              />
+              <Radar
+                name="Low"
+                dataKey="low"
+                stroke="#F87171"
+                fill="#F87171"
+                fillOpacity={0.6}
+              />
+              <Tooltip />
+              <Legend />
+            </RadarChart>
+          </ResponsiveContainer>
+        </div>
 
-//         {/* Future Prediction - Stacked Area Chart */}
-//         <div className="bg-white rounded-lg shadow-lg p-6 mb-4">
-//           <h3 className="text-lg font-medium text-gray-800 mb-4">
-//             Future Prediction
-//           </h3>
-//           <ResponsiveContainer width="100%" height={400}>
-//             <AreaChart data={futurePrediction}>
-//               <defs>
-//                 <linearGradient id="colorNewUsers" x1="0" y1="0" x2="0" y2="1">
-//                   <stop offset="5%" stopColor="#6366F1" stopOpacity={0.8} />
-//                   <stop offset="95%" stopColor="#6366F1" stopOpacity={0} />
-//                 </linearGradient>
-//                 <linearGradient
-//                   id="colorUniqueUsers"
-//                   x1="0"
-//                   y1="0"
-//                   x2="0"
-//                   y2="1"
-//                 >
-//                   <stop offset="5%" stopColor="#F87171" stopOpacity={0.8} />
-//                   <stop offset="95%" stopColor="#F87171" stopOpacity={0} />
-//                 </linearGradient>
-//               </defs>
-//               <XAxis dataKey="month" />
-//               <YAxis />
-//               <CartesianGrid strokeDasharray="3 3" />
-//               <Tooltip />
-//               <Legend />
-//               <Area
-//                 type="monotone"
-//                 dataKey="high"
-//                 stroke="#6366F1"
-//                 fillOpacity={1}
-//                 fill="url(#colorNewUsers)"
-//               />
-//               <Area
-//                 type="monotone"
-//                 dataKey="low"
-//                 stroke="#F87171"
-//                 fillOpacity={1}
-//                 fill="url(#colorUniqueUsers)"
-//               />
-//             </AreaChart>
-//           </ResponsiveContainer>
-//         </div>
-//       </div>
-// {/* 
-//       {isUploadModalOpen && (
-//         <UploadModal
-//           isOpen={isUploadModalOpen}
-//           onClose={() => setIsUploadModalOpen(false)}
-//           showExtra={false}
-//           setFile={setFile}
-//           type={"stats"}
-//         />
-//       )} */}
-//     </div>
+        
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-4">
+          <h3 className="text-lg font-medium text-gray-800 mb-4">
+            Future Prediction
+          </h3>
+          <ResponsiveContainer width="100%" height={400}>
+            <AreaChart data={futurePrediction}>
+              <defs>
+                <linearGradient id="colorNewUsers" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#6366F1" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#6366F1" stopOpacity={0} />
+                </linearGradient>
+                <linearGradient
+                  id="colorUniqueUsers"
+                  x1="0"
+                  y1="0"
+                  x2="0"
+                  y2="1"
+                >
+                  <stop offset="5%" stopColor="#F87171" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#F87171" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <XAxis dataKey="month" />
+              <YAxis />
+              <CartesianGrid strokeDasharray="3 3" />
+              <Tooltip />
+              <Legend />
+              <Area
+                type="monotone"
+                dataKey="high"
+                stroke="#6366F1"
+                fillOpacity={1}
+                fill="url(#colorNewUsers)"
+              />
+              <Area
+                type="monotone"
+                dataKey="low"
+                stroke="#F87171"
+                fillOpacity={1}
+                fill="url(#colorUniqueUsers)"
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
 
-<h1>Hello</h1>
+      {isUploadModalOpen && (
+        <UploadModal
+          isOpen={isUploadModalOpen}
+          onClose={() => setIsUploadModalOpen(false)}
+          showExtra={false}
+          setFile={setFile}
+          type={"stats"}
+        />
+      )}
+    </div>
 
-    
   );
 };
 

@@ -43,7 +43,7 @@ const MainContent = ({ onUploadClick }) => {
         <div className="flex justify-end items-center mb-6 space-x-4">
           <button
             onClick={onUploadClick}
-            className="flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-gray-200 transition cursor-pointer"
+            className="flex items-center px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-800 transition cursor-pointer"
           >
             <Upload className="w-5 h-5 mr-2" />
             Upload files

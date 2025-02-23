@@ -27,7 +27,7 @@ logging.basicConfig(level=logging.DEBUG)
 nlp = spacy.load("en_core_web_sm")
 
 # Groq API Configuration
-GROQ_API_KEY = "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"
+GROQ_API_KEY = ""
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 # Initialize FastAPI app

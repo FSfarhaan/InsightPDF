@@ -7,7 +7,7 @@ import axios from "axios";
 const TalkDataInterface = () => {
   const [inputMessage, setInputMessage] = useState("");
   const [responses, setResponses] = useState([]);
-  const BACKEND_CHAT = "http://192.168.242.94:8000/chat"
+  const BACKEND_CHAT = import.meta.env.VITE_PYTHON_AYUSH;
 
   const handleMessageChange = (e) => {
     setInputMessage(e.target.value);
@@ -27,7 +27,7 @@ const TalkDataInterface = () => {
         session_id: "1234",
         model: "llama3-70b-8192"
       }
-      const data = await axios.post(BACKEND_CHAT, payload);
+      const data = await axios.post(`${BACKEND_CHAT}/chat`, payload);
       const response = data.data;
 
       setResponses((prev) => [...prev, { text: response.answer, sender: "ai" }]);
