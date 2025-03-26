@@ -7,9 +7,11 @@ const KnowledgeGraph = () => {
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [file, setFile] = useState(null);
 
+  const URL = import.meta.env.VITE_PYTHON_SAKSHI;
+
   const handleRefreshKnowledge = () => {
     fetch(
-      "https://e226-2409-40c0-100c-34f2-8caf-983a-a8f8-5c63.ngrok-free.app/graph",
+      `${URL}/graph`,
       {
         headers: {
           "ngrok-skip-browser-warning": "true",
