@@ -20,7 +20,7 @@ const Sidebar = () => {
                 { label: "Chat", icon: <MessageCircle />, path: "/chat" },
                 { label: "Knowledge Graph", icon: <GitGraph />, path: "/knowledgegraph" },
                 { label: "Corelations", icon: <Link2 />, path: "/corelations" },
-                { label: "Statistics", icon: <BarChart />, path: "/statistics" }
+                // { label: "Statistics", icon: <BarChart />, path: "/statistics" }
             ].map(({ label, icon, path }) => (
                 <Link
                 key={label}

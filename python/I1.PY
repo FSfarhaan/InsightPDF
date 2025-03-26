@@ -1,3 +1,5 @@
+# import nltk
+# nltk.download('punkt_tab')
 import re
 import networkx as nx
 import spacy
@@ -27,7 +29,7 @@ logging.basicConfig(level=logging.DEBUG)
 nlp = spacy.load("en_core_web_sm")
 
 # Groq API Configuration
-GROQ_API_KEY = ""
+GROQ_API_KEY = "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"
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 # Initialize FastAPI app
@@ -82,7 +84,7 @@ def generate_relationships(text):
             "Extract key entities and their relationships from the following text:\n\n{text}\n\nOutput as structured relationships."
         )
 
-        llm = ChatGroq(model_name="mixtral-8x7b-32768", groq_api_key=GROQ_API_KEY)
+        llm = ChatGroq(model_name="llama3-70b-8192", groq_api_key=GROQ_API_KEY)
 
         formatted_prompt = prompt_template.format(text=text)
         response = llm.invoke(formatted_prompt)

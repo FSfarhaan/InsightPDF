@@ -7,7 +7,7 @@ import StatisticsDashboard from "./pages/StatisticsDashboard";
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Chatscreen = lazy(() => import("./pages/Chatscreen"));
 const KnowledgeGraphScreen = lazy(() => import("./pages/KnowledgeGraphScreen"));
-const Statistics = lazy(() => import("./pages/StatisticsDashboard"));
+// const Statistics = lazy(() => import("./pages/StatisticsDashboard"));
 
 function App() {
 
@@ -22,7 +22,7 @@ function App() {
               <Route path="/knowledgegraph" element={<KnowledgeGraphScreen />} />
               <Route path="/corelations" element={<Correlations />} />
               {/* <Route path="/statistics" element={<Statistics />} /> */}
-              <Route path="/statistics" element={<StatisticsDashboard />} />
+              {/* <Route path="/statistics" element={<StatisticsDashboard />} /> */}
 
               <Route path="*" element={<h1 className="text-center mt-10">404 - Not Found</h1>} />
             </Routes>
