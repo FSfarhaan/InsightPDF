@@ -4,6 +4,7 @@ import Sidebar from "./component/Sidebar";
 import Correlations from "./pages/Corelations";
 import StatisticsDashboard from "./pages/StatisticsDashboard";
 
+
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Chatscreen = lazy(() => import("./pages/Chatscreen"));
 const KnowledgeGraphScreen = lazy(() => import("./pages/KnowledgeGraphScreen"));

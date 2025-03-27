@@ -6,8 +6,8 @@ const Sidebar = () => {
     const location = useLocation();
   
     return (
-      <div className="w-64 bg-white border-r border-gray-200 p-4">
-        <div className="flex items-center mb-6">
+      <div className="w-64 bg-white border-r border-gray-200 p-4 ">
+        <div className="flex items-center mb-6 "> 
         <div className="w-9 h-9 md:mr-3 mr-2 border bg-purple-950 border-gray-600 p-2 rounded-full">
           <img src="/devflow_logo.png" alt="Devflow Logo" />
         </div>
