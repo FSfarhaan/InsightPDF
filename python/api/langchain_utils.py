@@ -11,6 +11,8 @@ from chroma_utils import vectorstore
 
 retriever = vectorstore.as_retriever(search_kwargs={"k": 2})
 
+API_KEY = "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"
+
 output_parser = StrOutputParser()
 
 contextualize_q_system_prompt = (
@@ -35,7 +37,7 @@ qa_prompt = ChatPromptTemplate.from_messages([
 ])
 
 def get_rag_chain(model="llama3-70b-8192"):
-    llm = ChatGroq(model=model, api_key='')
+    llm = ChatGroq(model=model, api_key=API_KEY)
     history_aware_retriever = create_history_aware_retriever(llm, retriever, contextualize_q_prompt)
     question_answer_chain = create_stuff_documents_chain(llm, qa_prompt)
     rag_chain = create_retrieval_chain(history_aware_retriever, question_answer_chain)    

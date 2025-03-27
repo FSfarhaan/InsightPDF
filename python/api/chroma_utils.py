@@ -10,7 +10,7 @@ import os
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200, length_function=len)
 embedding_function = embedding_function = AzureOpenAIEmbeddings(
     azure_endpoint="https://ragapplicationapi.openai.azure.com/",
-    api_key='',  # Store your key as an environment variable
+    api_key='CHiWzAnvW4gb17mCVc2SfhQeYorKlxVWDaFkleDPuENpTH8ZApfVJQQJ99BBACYeBjFXJ3w3AAABACOGLyVH',  # Store your key as an environment variable
     deployment="text-embedding-3-small",  # Your deployment name
     api_version="2023-05-15"  # API version from your endpoint details
 )
