@@ -21,6 +21,9 @@ import PyPDF2
 import docx
 import os
 from io import BytesIO
+import uvicorn
+from dotenv import load_dotenv
+load_dotenv()
 
 # Setup logging
 logging.basicConfig(level=logging.DEBUG)
@@ -28,8 +31,9 @@ logging.basicConfig(level=logging.DEBUG)
 # Load NLP model
 nlp = spacy.load("en_core_web_sm")
 
-# Groq API Configuration
-GROQ_API_KEY = "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"
+#Groq API Configuration
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+#  = "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"
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 # Initialize FastAPI app

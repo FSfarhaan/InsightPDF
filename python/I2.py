@@ -8,13 +8,17 @@ import uvicorn
 from typing import Dict, List
 from transformers import pipeline
 import requests
+from dotenv import load_dotenv
+load_dotenv()
 
 app = FastAPI()
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
+HUGGING_API_KEY = os.getenv("HUGGING_API_KEY")
+
 API_URL = "https://api-inference.huggingface.co/models/facebook/bart-large-cnn"
-HEADERS = {"Authorization": f"Bearer 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"}
+HEADERS = {"Authorization": f"Bearer {HUGGING_API_KEY}"}
 
 # Load summarization pipeline
 # summarizer = pipeline("summarization", model="t5-small")
@@ -113,6 +117,3 @@ async def get_summary(filename: str):
     
     summary = summarize_text(text)
     return JSONResponse(content={"filename": filename, "summary": summary})
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
