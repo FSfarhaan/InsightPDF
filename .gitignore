@@ -16,6 +16,8 @@ dist-ssr
 
 sneha
 
+python/api
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
