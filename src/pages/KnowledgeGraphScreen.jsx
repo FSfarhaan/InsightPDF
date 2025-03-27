@@ -7,7 +7,7 @@ const KnowledgeGraph = () => {
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [file, setFile] = useState(null);
 
-  const URL = import.meta.env.VITE_PYTHON_SAKSHI;
+  const URL = "http://127.0.0.1:8000";
 
   const handleRefreshKnowledge = () => {
     fetch(

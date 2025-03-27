@@ -9,6 +9,8 @@ import {
   Link2,
   FileText,
 } from "lucide-react";
+import axios from "axios";
+import { Link, useNavigate } from 'react-router-dom';
 
 const UploadModal = ({
   isOpen,
@@ -16,6 +18,7 @@ const UploadModal = ({
   setFile = null,
   type,
 }) => {
+  const navigate = useNavigate();
   const [screen, setScreen] = useState("initial");
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [uploadSuccess, setUploadSuccess] = useState(false);
@@ -32,6 +35,19 @@ const UploadModal = ({
     onClose();
   };
 
+  const handleRouter =() => {
+    handleClose();
+    let url;
+    if(selectedOption === "knowledgeGraph") {
+      url = "/knowledgegraph"
+    } else if (selectedOption === "textExtraction") {
+      url = "/extract"
+    } else {
+      url = "/chat"
+    }
+    navigate(url);
+  }
+
   // Handle File Selection
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
@@ -42,9 +58,37 @@ const UploadModal = ({
   };
 
   // Handle Upload Click
-  const handleUpload = () => {
+  const handleUpload = async () => {
     if (selectedFiles.length > 0) {
       // Your existing upload logic here
+
+      console.log(selectedOption);
+
+      let url;
+      if(selectedOption === 'knowledgeGraph') {
+        url = "http://127.0.0.1:8000/upload";
+      } else if(selectedOption === "textExtraction") {
+        url = "http://127.0.0.1:8001/process-docs/"
+      } else if(selectedOption === "correlations") {
+        url = ""
+      } else {
+        url = "http://127.0.0.1:8001/process-docs/"
+      }
+
+      console.log(selectedFiles);
+      
+      const formData = new FormData();
+        formData.append("file", selectedFiles[0]); // selectedFile should be a File object
+
+        const response = await axios.post(url, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+      const data = response.data;
+      console.log(data);
+
       setUploadSuccess(true);
     } else {
       alert("Please select file(s) before uploading!");
@@ -218,7 +262,7 @@ const UploadModal = ({
                     console.log('Show Correlations');
                     break;
                 }
-                handleClose();
+                handleRouter();
               }}
               className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition shadow"
             >

@@ -36,12 +36,21 @@ const TalkDataInterface = () => {
       // session_id: "1234",
       // model: "llama3-70b-8192",
     };
-    const response = "Hello this is Farhaan Shaikh, kaise hai sab log, sab maze me na?";
+
+    // const response = "Hello this is Farhaan Shaikh, kaise hai sab log, sab maze me na?";
     // const data = await axios.post(`http://localhost:8000/chat`, payload);
     // const response = data.data;
-    setResponses((prev) => [...prev, { text: response.answer, sender: "ai" }]);
+
+    const { data } = await axios.post("http://localhost:8001/ask/", payload, {
+      headers: {
+        "Content-Type": "application/json", // Ensure JSON format
+      },
+    });
+    console.log(data);
+
+    // setResponses((prev) => [...prev, { id: Date.now().toString(), text: data.response, sender: "ai" }]);
     setTimeout(() => {
-      setResponseText(response
+      setResponseText(data.response
         .trim()
         .split(/\s+/) // Split by any whitespace
         .filter(word => word.length > 0));
@@ -109,8 +118,8 @@ const TalkDataInterface = () => {
                 <div
                   className={`max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl rounded-lg px-4 py-2 ${
                     message.sender === "user"
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-200 text-gray-800"
+                      ? "bg-purple-500 text-white"
+                      : "bg-gray-200 text-gray-800 text-left"
                   }`}
                 >
                   {message.text}
@@ -121,7 +130,7 @@ const TalkDataInterface = () => {
             {/* Typing indicator */}
             {isTyping && (
               <div className="flex justify-start mb-4">
-                <div className="max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl rounded-lg px-4 py-2 bg-gray-200 text-gray-800">
+                <div className="max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl rounded-lg px-4 py-2 bg-gray-200 text-gray-800 text-left">
                   {visibleWords.join(" ")}
                   <span className="animate-pulse">|</span>
                 </div>
