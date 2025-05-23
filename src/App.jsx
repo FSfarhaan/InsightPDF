@@ -1,7 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { lazy } from "react";
+import { lazy, useEffect, useState } from "react";
 import Sidebar from "./component/Sidebar";
 import Correlations from "./pages/Corelations";
+import AuthForm from "./pages/Authform";
 
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Chatscreen = lazy(() => import("./pages/Chatscreen"));
@@ -10,13 +11,20 @@ const TextExtraction = lazy(() => import("./pages/TextExtraction"));
 const Statistics = lazy(() => import("./pages/StatisticsDashboard"));
 
 function App() {
+  const [showSiderbar, setShowSiderbar] = useState(false);
+  useEffect(() => {
+    const token = localStorage.getItem("token")
+    if(token) setShowSiderbar(true);
+
+  }, [])
 
   return (
     <Router>
       <div className='flex'>
-        {/* <Sidebar /> */}
-        <div className='w-full'>    
+        {showSiderbar && <Sidebar /> }
+        <div className='w-full ml-64'>    
         <Routes>
+              <Route path="/login" element={<AuthForm />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/chat" element={<Chatscreen />} />
               <Route path="/knowledgegraph" element={<KnowledgeGraphScreen />} />

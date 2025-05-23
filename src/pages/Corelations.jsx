@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FileText, Upload, Search, AlertTriangle, Download, X, Printer } from 'lucide-react';
 
 const Correlations = () => {
@@ -7,6 +7,13 @@ const Correlations = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState('');
   const reportRef = useRef(null);
+
+  const [analysisLocal, setAnalysisLocal] = useState("");
+
+  useEffect(() => {
+    const analysis = localStorage.getItem("analysis");
+    setAnalysis(analysis);
+  }, [])
 
   // Simulated analysis results
   const sampleAnalysis = {
@@ -169,6 +176,8 @@ const Correlations = () => {
                     </button>
                   </div>
                 )}
+
+
               </div>
             </div>
           </div>
@@ -176,88 +185,46 @@ const Correlations = () => {
           {/* Analysis Results */}
           {analysis && (
             <div className="space-y-6">
-              {/* Analyzed Files - Show in print */}
-              <div className="hidden print:block mb-8">
-                <h2 className="text-xl font-semibold mb-4">Analyzed Files</h2>
-                <div className="space-y-2">
-                  {files.map((file, index) => (
-                    <div key={index} className="text-gray-600">
-                      • {file.name}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Results Grid */}
-              <div className="grid grid-cols-2 gap-6 print:gap-8">
-                {/* Similarities */}
-                <div className="bg-white rounded-xl overflow-hidden border border-gray-200 print:shadow-none print:border-0">
-                  <div className="p-5 bg-gradient-to-r from-green-50 to-green-100 border-b border-gray-200 print:bg-none print:border-b-2">
-                    <div className="text-lg font-semibold text-gray-800">Similar Content</div>
+            {/* Analyzed Files - Show in print */}
+            <div className="hidden print:block mb-8">
+              <h2 className="text-xl font-semibold mb-4">Analyzed Files</h2>
+              <div className="space-y-2">
+                {files.map((file, index) => (
+                  <div key={index} className="text-gray-600">
+                    • {file.name}
                   </div>
-                  <div className="p-6 space-y-4">
-                    {analysis.similarities.map((item, index) => (
-                      <div key={index} className="p-4 bg-green-50 rounded-xl border border-green-200 transition-all duration-200 hover:shadow-md print:bg-white print:border print:border-gray-300">
-                        <div className="space-y-3">
-                          <div className="space-y-2">
-                            <p className="text-sm text-gray-700">"{item.text1}"</p>
-                            <p className="text-sm text-gray-700">"{item.text2}"</p>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="text-green-600 font-medium text-sm px-3 py-1 bg-green-100 rounded-full print:bg-white print:border print:border-green-300">
-                              {(item.score * 100).toFixed(0)}% similar
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Contradictions */}
-                <div className="bg-white rounded-xl  overflow-hidden border border-gray-200 print:shadow-none print:border-0">
-                  <div className="p-5 bg-gradient-to-r from-red-50 to-red-100 border-b border-gray-200 print:bg-none print:border-b-2">
-                    <div className="flex items-center gap-2 text-lg font-semibold text-gray-800">
-                      <AlertTriangle className="h-5 w-5 text-red-500" />
-                      Contradictions
-                    </div>
-                  </div>
-                  <div className="p-6 space-y-4">
-                    {analysis.contradictions.map((item, index) => (
-                      <div key={index} className="p-4 bg-red-50 rounded-xl border border-red-200 transition-all duration-200 hover:shadow-md print:bg-white print:border print:border-gray-300">
-                        <div className="space-y-3">
-                          <div className="space-y-2">
-                            <p className="text-sm text-gray-700">"{item.text1}"</p>
-                            <p className="text-sm text-gray-700">"{item.text2}"</p>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="text-red-600 font-medium text-sm px-3 py-1 bg-red-100 rounded-full print:bg-white print:border print:border-red-300">
-                              {(item.probability * 100).toFixed(0)}% contradiction
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Timestamp - Show in print */}
-              <div className="hidden print:block mt-8 pt-4 border-t text-gray-500 text-sm">
-                Report generated on: {new Date().toLocaleString()}
-              </div>
-
-              {/* Download Report Button - Hide in print */}
-              <div className="flex justify-start mt-8 print:hidden">
-                <button 
-                  onClick={generateReport}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-xl hover:bg-gray-700 transition-all duration-200 font-medium shadow-lg hover:shadow-xl "
-                >
-                  <Printer className="h-5 w-5" />
-                  Print Report
-                </button>
+                ))}
               </div>
             </div>
+          
+            {/* Main Analysis Content */}
+            <div className="bg-white rounded-xl overflow-hidden border border-gray-200 print:shadow-none print:border-0">
+              <div className="p-5 bg-gradient-to-r from-blue-50 to-blue-100 border-b border-gray-200 print:bg-none print:border-b-2">
+                <div className="text-lg font-semibold text-gray-800">Detailed Analysis</div>
+              </div>
+              <div className="p-6">
+                <div className="prose max-w-none whitespace-pre-wrap text-gray-700">
+                  {analysis}
+                </div>
+              </div>
+            </div>
+          
+            {/* Timestamp - Show in print */}
+            <div className="hidden print:block mt-8 pt-4 border-t text-gray-500 text-sm">
+              Report generated on: {new Date().toLocaleString()}
+            </div>
+          
+            {/* Download Report Button - Hide in print */}
+            <div className="flex justify-start mt-8 print:hidden">
+              <button 
+                onClick={generateReport}
+                className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-xl hover:bg-gray-700 transition-all duration-200 font-medium shadow-lg hover:shadow-xl"
+              >
+                <Printer className="h-5 w-5" />
+                Print Report
+              </button>
+            </div>
+          </div>
           )}
         </div>
       </div>

@@ -24,6 +24,8 @@ const UploadModal = ({
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
 
+  const [analyze, setAnalyze] = useState("");
+
   if (!isOpen) return null;
 
   // Reset all states when closing
@@ -57,6 +59,21 @@ const UploadModal = ({
     }
   };
 
+  const handleMultiplePdf = async () => {
+    const formData = new FormData();
+    formData.append("file1", selectedFiles[0]); // selectedFile should be a File object
+    formData.append("file2", selectedFiles[1]); // selectedFile should be a File object
+
+    const response = await axios.post("http://127.0.0.1:8000/analyze/", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    setAnalyze(response.data.analysis)
+    localStorage.setItem("analysis", response.data.analysis);
+    navigate("/corelations")    
+  }
+
   // Handle Upload Click
   const handleUpload = async () => {
     if (selectedFiles.length > 0) {
@@ -64,23 +81,36 @@ const UploadModal = ({
 
       console.log(selectedOption);
 
-      let url;
-      if(selectedOption === 'knowledgeGraph') {
-        url = "http://127.0.0.1:8000/upload";
-      } else if(selectedOption === "textExtraction") {
-        url = "http://127.0.0.1:8001/process-docs/"
-      } else if(selectedOption === "correlations") {
-        url = ""
-      } else {
-        url = "http://127.0.0.1:8001/process-docs/"
+      const url1 = "http://127.0.0.1:8000/upload";
+      const url2 = "http://127.0.0.1:8001/process-docs/";
+
+      if(selectedOption === "correlations") {
+        handleMultiplePdf();
+        return;
       }
+
+      // if(selectedOption === 'knowledgeGraph') {
+      //   url = "http://127.0.0.1:8000/upload";
+      // } else if(selectedOption === "textExtraction") {
+      //   url = "http://127.0.0.1:8001/process-docs/"
+      // } else if(selectedOption === "correlations") {
+      //   url = ""
+      // } else {
+      //   url = "http://127.0.0.1:8001/process-docs/"
+      // }
 
       console.log(selectedFiles);
       
       const formData = new FormData();
         formData.append("file", selectedFiles[0]); // selectedFile should be a File object
 
-        const response = await axios.post(url, formData, {
+        const response = await axios.post(url1, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        const response2 = await axios.post(url2, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

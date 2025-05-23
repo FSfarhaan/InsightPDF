@@ -12,49 +12,43 @@ const App = () => {
 
   return (
     <div className="w-full">
-     {/* Hero Section */}
-<div className="relative min-h-screen flex items-center justify-center overflow-hidden">
-  {/* Background Image */}
-  <div 
-    className="absolute inset-0 bg-cover bg-center z-0" 
-    style={{ 
-      backgroundImage: "url('/background_web.jpg')",
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
-      zIndex: -1
-    }}
-  />
-  
-  {/* Black Overlay */}
-  <div className="absolute inset-0 bg-black opacity-50 z-0" />
-
-  {/* Content */}
-  <div className="relative z-10 container mx-auto px-6 py-16 text-center">
-    <div className="max-w-3xl mx-auto">
-      <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
-        AI Research Assistant
-      </h1>
-      <p className="text-xl text-white/80 mb-10 max-w-2xl mx-auto">
-        Your AI-powered partner for research and discovery, helping you analyze complex data, extract key insights, and drive innovation with intelligent automation.
-      </p>
-      {/* Scroll Button */}
-      <button 
-        className="bg-white/20 text-white px-6 py-3 rounded-lg hover:bg-white/30 transition"
-        onClick={scrollToDashboard}
-      >
-        Explore
-      </button>
-    </div>
-  </div>
-</div>
-
-
-      {/* Dashboard Section */}
-      <div id="dashboard">
-        <Dashboard />
+    {/* Hero Section - Enhanced Size */}
+    <div className="relative min-h-screen bg-gradient-to-br from-purple-50 to-white">
+      <div className="container mx-auto px-6 py-16 h-full flex items-center">
+        <div className="flex flex-col md:flex-row items-center justify-between w-full gap-12">
+          {/* Text Content - Left Side - Enhanced */}
+          <div className="md:w-1/2 mb-10 md:mb-0 space-y-8">
+            <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-purple-900 leading-tight">
+              AI Research <span className="text-purple-600">Assistant</span>
+            </h1>
+            <p className="text-2xl md:text-3xl text-purple-700 leading-relaxed">
+              Your AI-powered partner for research and discovery, helping you analyze complex data and extract key insights.
+            </p>
+            <button 
+              className="bg-purple-600 text-white px-8 py-4 rounded-xl hover:bg-purple-700 transition shadow-xl text-xl font-semibold"
+              onClick={scrollToDashboard}
+            >
+              Explore Now
+            </button>
+          </div>
+          
+          {/* Image - Right Side - Enhanced */}
+          <div className="md:w-1/2 flex justify-center">
+            <img 
+              src="/chatbotamico.svg" 
+              alt="AI Assistant" 
+              className="w-full max-w-xl lg:max-w-2xl xl:max-w-3xl h-auto"
+            />
+          </div>
+        </div>
       </div>
     </div>
+
+    {/* Dashboard Section */}
+    <div id="dashboard">
+      <Dashboard />
+    </div>
+  </div>
   );
 };
 

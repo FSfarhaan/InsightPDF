@@ -13,6 +13,7 @@ const TalkDataInterface = () => {
   const messagesEndRef = useRef(null);
 
   const BACKEND_CHAT = import.meta.env.VITE_PYTHON_AYUSH;
+  const token = localStorage.getItem("token");
 
   const handleMessageChange = (e) => {
     setInputMessage(e.target.value);
@@ -31,6 +32,16 @@ const TalkDataInterface = () => {
 
     setIsTyping(true);
 
+    const response = await axios.post(
+      'http://localhost:3001/messages',
+      { text: inputMessage },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
     const payload = {
       question: inputMessage,
       // session_id: "1234",
@@ -47,6 +58,8 @@ const TalkDataInterface = () => {
       },
     });
     console.log(data);
+
+
 
     // setResponses((prev) => [...prev, { id: Date.now().toString(), text: data.response, sender: "ai" }]);
     setTimeout(() => {

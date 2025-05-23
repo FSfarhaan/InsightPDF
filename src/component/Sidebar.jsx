@@ -1,12 +1,18 @@
 import React from 'react'
 import { FolderIcon, LayoutDashboard, MessageCircle, GitGraph, Link2, BarChart } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
     const location = useLocation();
+    const navigation = useNavigate();
+
+    const handleLogout = () => {
+      localStorage.removeItem("token");
+      navigation("/login")
+    }
   
     return (
-      <div className="w-64 bg-white border-r border-gray-200 p-4 ">
+      <div className="w-64 bg-white border-r border-gray-200 p-4 fixed z-50 h-full">
         <div className="flex items-center mb-6 "> 
         <div className="w-9 h-9 md:mr-3 mr-2 border bg-purple-950 border-gray-600 p-2 rounded-full">
           <img src="/devflow_logo.png" alt="Devflow Logo" />
@@ -20,7 +26,8 @@ const Sidebar = () => {
                 { label: "Chat", icon: <MessageCircle />, path: "/chat" },
                 { label: "Knowledge Graph", icon: <GitGraph />, path: "/knowledgegraph" },
                 { label: "Corelations", icon: <Link2 />, path: "/corelations" },
-                { label: "Text Extractions", icon: <Link2 />, path: "/extract" },
+                 { label: "Text Extractions", icon: <Link2 />, path: "/extract" },
+                { label: "Statistics", icon: <Link2 />, path: "/statistics" },
                 // { label: "Statistics", icon: <BarChart />, path: "/statistics" }
             ].map(({ label, icon, path }) => (
                 <Link
@@ -43,6 +50,10 @@ const Sidebar = () => {
             </div>
           ))}
         </div>
+
+        <button onClick={handleLogout} className='bg-red-600 px-5 py-2 text-white mt-5 rounded-lg'>
+            Logout
+        </button>
 
       </div>
     );
