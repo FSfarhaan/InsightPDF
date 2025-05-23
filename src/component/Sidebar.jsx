@@ -26,9 +26,9 @@ const Sidebar = () => {
                 { label: "Dashboard", icon: <LayoutDashboard />, path: "/dashboard" },
                 { label: "Chat", icon: <MessageCircle />, path: "/chat" },
                 { label: "Knowledge Graph", icon: <GitGraph />, path: "/knowledgegraph" },
-                { label: "Corelations", icon: <Link2 />, path: "/corelations" },
+                // { label: "Corelations", icon: <Link2 />, path: "/corelations" },
                  { label: "Text Extractions", icon: <Link2 />, path: "/extract" },
-                { label: "Statistics", icon: <Link2 />, path: "/statistics" },
+                // { label: "Statistics", icon: <Link2 />, path: "/statistics" },
                 // { label: "Statistics", icon: <BarChart />, path: "/statistics" }
             ].map(({ label, icon, path }) => (
                 <Link

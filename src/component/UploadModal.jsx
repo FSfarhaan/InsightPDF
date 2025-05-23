@@ -51,13 +51,24 @@ const UploadModal = ({
   }
 
   // Handle File Selection
-  const handleFileChange = (event) => {
+  const handleFileChange = async (event) => {
     const files = Array.from(event.target.files);
     if (files.length > 0) {
       setSelectedFiles(files);
-      setUploadSuccess(false); // Reset upload state
+      setUploadSuccess(false);
+
+      const file = files[0];
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        const base64 = reader.result;
+        localStorage.setItem("uploadedPDF", base64);
+      };
+
+      reader.readAsDataURL(file); // Read as base64 string
     }
   };
+
 
   const handleMultiplePdf = async () => {
     const formData = new FormData();
