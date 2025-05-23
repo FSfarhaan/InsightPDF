@@ -26,7 +26,6 @@ const StatisticsDashboard = () => {
     const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
     const [chartArray, setChartArray] = useState();
-    const URL = import.meta.env.VITE_PYTHON_AYUSH;
   
   useEffect(() => {
     const fetchData = () => {

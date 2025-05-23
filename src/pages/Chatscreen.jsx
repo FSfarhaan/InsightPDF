@@ -12,7 +12,6 @@ const TalkDataInterface = () => {
   const [responseText, setResponseText] = useState([]);
   const messagesEndRef = useRef(null);
 
-  const BACKEND_CHAT = import.meta.env.VITE_PYTHON_AYUSH;
   const token = localStorage.getItem("token");
 
   const handleMessageChange = (e) => {

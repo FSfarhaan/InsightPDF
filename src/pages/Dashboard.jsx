@@ -12,11 +12,9 @@ const App = () => {
 
   return (
     <div className="w-full">
-    {/* Hero Section - Enhanced Size */}
-    <div className="relative min-h-screen bg-gradient-to-br from-purple-50 to-white">
+    {/* <div className="relative min-h-screen bg-gradient-to-br from-purple-50 to-white">
       <div className="container mx-auto px-6 py-16 h-full flex items-center">
         <div className="flex flex-col md:flex-row items-center justify-between w-full gap-12">
-          {/* Text Content - Left Side - Enhanced */}
           <div className="md:w-1/2 mb-10 md:mb-0 space-y-8">
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-purple-900 leading-tight">
               AI Research <span className="text-purple-600">Assistant</span>
@@ -32,7 +30,6 @@ const App = () => {
             </button>
           </div>
           
-          {/* Image - Right Side - Enhanced */}
           <div className="md:w-1/2 flex justify-center">
             <img 
               src="/chatbotamico.svg" 
@@ -42,7 +39,7 @@ const App = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div> */}
 
     {/* Dashboard Section */}
     <div id="dashboard">

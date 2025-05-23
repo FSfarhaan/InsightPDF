@@ -4,6 +4,7 @@ import Sidebar from "./component/Sidebar";
 import Correlations from "./pages/Corelations";
 import AuthForm from "./pages/Authform";
 
+const LandingPage = lazy(() => import("./pages/LandingPage"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Chatscreen = lazy(() => import("./pages/Chatscreen"));
 const KnowledgeGraphScreen = lazy(() => import("./pages/KnowledgeGraphScreen"));
@@ -11,19 +12,34 @@ const TextExtraction = lazy(() => import("./pages/TextExtraction"));
 const Statistics = lazy(() => import("./pages/StatisticsDashboard"));
 
 function App() {
-  const [showSiderbar, setShowSiderbar] = useState(false);
-  useEffect(() => {
-    const token = localStorage.getItem("token")
-    if(token) setShowSiderbar(true);
+  const [showSiderbar, setShowSiderbar] = useState(!!localStorage.getItem("token"));
 
-  }, [])
+
+  useEffect(() => {
+    function handleLogin() {
+      setShowSiderbar(true);
+    }
+    window.addEventListener("login", handleLogin);
+
+    return () => window.removeEventListener("login", handleLogin);
+  }, []);
+
+  useEffect(() => {
+    function handleLogout() {
+      setShowSiderbar(false);
+    }
+    window.addEventListener("logout", handleLogout);
+
+    return () => window.removeEventListener("logout", handleLogout);
+  }, []);
 
   return (
     <Router>
       <div className='flex'>
         {showSiderbar && <Sidebar /> }
-        <div className='w-full ml-64'>    
+        <div className={`w-full ${showSiderbar ? "ml-64": "ml-0"}`}>    
         <Routes>
+              <Route path="/" element={<LandingPage />} />
               <Route path="/login" element={<AuthForm />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/chat" element={<Chatscreen />} />

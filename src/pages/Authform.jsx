@@ -45,6 +45,7 @@ const AuthForm = () => {
                 }
 
                 navigate('/dashboard');
+                window.dispatchEvent(new Event("login"));
                 
             } else alert("Some error occurred");
         } catch (err) {
