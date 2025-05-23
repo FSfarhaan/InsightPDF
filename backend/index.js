@@ -7,8 +7,8 @@ const jwt = require("jsonwebtoken");
 
 const app = express();
 
-// Middleware
-app.use(express.json());
+// Middle ware
+app.use(express.json());  
 app.use(cors());
 
 // Connect to MongoDB
