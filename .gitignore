@@ -31,3 +31,6 @@ python/api
 
 python/myvenv
 python/api/myvenv
+
+./backend/
+./python/

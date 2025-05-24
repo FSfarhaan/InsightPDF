@@ -10,22 +10,25 @@ const Correlations = () => {
 
   const [analysisLocal, setAnalysisLocal] = useState("");
 
-  useEffect(() => {
-    const analysis = localStorage.getItem("analysis");
-    setAnalysis(analysis);
-  }, [])
+  // useEffect(() => {
+  //   const analysis = localStorage.getItem("analysis");
+  //   setAnalysis(analysis);
+  // }, [])
 
   // Simulated analysis results
   const sampleAnalysis = {
     similarities: [
-      { text1: "The project deadline is next week.", text2: "We need to complete this by next week.", score: 0.85 },
-      { text1: "Team morale is low.", text2: "Employee satisfaction has decreased.", score: 0.72 },
-      { text1: "Resources are limited.", text2: "We have constraints on available resources.", score: 0.68 }
+      { text1: "Both texts discuss the quick commerce sector in India, highlighting the growth and competition in the market.", score: 0.85 },
+      { text1: "Both texts mention the importance of rapid delivery services, with Blinkit and Zepto focusing on 10-minute grocery deliveries.", score: 0.72 },
+      { text1: "Both texts discuss the financial performance of the companies, with Blinkit holding a 46% market share and Zepto reporting significant revenue growth.", score: 0.68 },
+      { text1: "Both texts mention the challenges faced by the companies, including competition, regulatory scrutiny, and the need to achieve profitability.", score: 0.68 }
     ],
     contradictions: [
-      { text1: "The budget is sufficient.", text2: "We don't have enough resources.", probability: 0.9 },
-      { text1: "The timeline is feasible.", text2: "It's impossible to meet the deadline.", probability: 0.95 },
-      { text1: "Quality is our priority.", text2: "We need to rush the delivery.", probability: 0.88 }
+      { text1: "Market Share: Text 1 states that Blinkit holds a 46% share in India's quick commerce sector, while Text 2 does not provide a specific market share for Zepto, but mentions its significant revenue growth.", probability: 0.9 },
+      { text1: "Financial Performance: Text 1 states that Blinkit's adjusted core loss widened to INR 103 billion, while Text 2 reports that Zepto managed to slightly reduce its losses and improve its profit after tax as a percentage of revenue.", probability: 0.95 },
+      { text1: "Business Model: Text 1 states that Blinkit operates on a quick commerce model, utilizing a network of strategically located warehouses and dark stores to fulfill orders rapidly, whereas Text 2 does not provide detailed information about Zepto's business model.", probability: 0.88 },
+      { text1: "Acquisition: Text 1 states that Blinkit was acquired by Zomato in 2022, while Text 2 does not mention any acquisition or merger.", probability: 0.67 },
+      { text1: "IPO Plans: Text 2 states that Zepto aims to go for an IPO by 2025, while Text 1 does not mention any IPO plans for Blinkit.", probability: 0.50 }
     ]
   };
 
@@ -85,26 +88,62 @@ const Correlations = () => {
       setError('Please upload at least one file to analyze');
       return;
     }
-    setAnalysis(sampleAnalysis);
+    setTimeout(() => {
+      setAnalysis(sampleAnalysis);
+    }, 1000)
     setError('');
   };
 
   const generateReport = () => {
     if (!analysis) return;
-    
-    // Open print dialog
     window.print();
+  };
+
+  // Function to render similarity score as a visual indicator
+  const renderScoreBar = (score) => {
+    const percentage = Math.round(score * 100);
+    let colorClass = '';
+    
+    if (score > 0.8) colorClass = 'bg-green-500';
+    else if (score > 0.6) colorClass = 'bg-blue-500';
+    else colorClass = 'bg-yellow-500';
+    
+    return (
+      <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+        <div 
+          className={`h-2.5 rounded-full ${colorClass}`} 
+          style={{ width: `${percentage}%` }}
+        ></div>
+        <div className="text-xs text-gray-500 mt-1">{percentage}% match</div>
+      </div>
+    );
+  };
+
+  // Function to render contradiction probability as a visual indicator
+  const renderProbabilityBar = (probability) => {
+    const percentage = Math.round(probability * 100);
+    let colorClass = 'bg-red-500';
+    
+    return (
+      <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+        <div 
+          className={`h-2.5 rounded-full ${colorClass}`} 
+          style={{ width: `${percentage}%` }}
+        ></div>
+        <div className="text-xs text-gray-500 mt-1">{percentage}% contradiction</div>
+      </div>
+    );
   };
 
   return (
     <>
       <div className="p-6 space-y-6 text-black bg-slate-50 min-h-screen print:bg-white print:p-0">
-        <div className="max-w-7xl">
-          <h1 className="text-3xl font-bold text-gray-900 mb-8 print:text-center">Document Analysis Report</h1>
+        <div className="max-w-7xl mx-auto">
+          <h1 className="text-3xl font-bold text-gray-900 mb-8 print:text-center">Document Correlation Analysis</h1>
           
           {/* Upload Section - Hide in print */}
           <div className="print:hidden">
-            <div className="bg-white rounded-xl  overflow-hidden border border-gray-200 mb-8">
+            <div className="bg-white rounded-xl overflow-hidden border border-gray-200 mb-8">
               <div className="p-5 bg-gradient-to-r from-blue-50 to-blue-100 border-b border-gray-200">
                 <div className="flex items-center gap-2 text-xl font-semibold text-gray-800">
                   <FileText className="h-6 w-6 text-blue-600" />
@@ -169,15 +208,13 @@ const Correlations = () => {
                     </div>
                     <button
                       onClick={handleAnalyze}
-                      className="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-800 transition-all duration-200 font-medium shadow-lg shadow-blue-200 "
+                      className="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-800 transition-all duration-200 font-medium shadow-lg shadow-blue-200"
                     >
                       <Search className="h-5 w-5" />
                       Analyze Documents
                     </button>
                   </div>
                 )}
-
-
               </div>
             </div>
           </div>
@@ -185,46 +222,97 @@ const Correlations = () => {
           {/* Analysis Results */}
           {analysis && (
             <div className="space-y-6">
-            {/* Analyzed Files - Show in print */}
-            <div className="hidden print:block mb-8">
-              <h2 className="text-xl font-semibold mb-4">Analyzed Files</h2>
-              <div className="space-y-2">
-                {files.map((file, index) => (
-                  <div key={index} className="text-gray-600">
-                    • {file.name}
-                  </div>
-                ))}
-              </div>
-            </div>
-          
-            {/* Main Analysis Content */}
-            <div className="bg-white rounded-xl overflow-hidden border border-gray-200 print:shadow-none print:border-0">
-              <div className="p-5 bg-gradient-to-r from-blue-50 to-blue-100 border-b border-gray-200 print:bg-none print:border-b-2">
-                <div className="text-lg font-semibold text-gray-800">Detailed Analysis</div>
-              </div>
-              <div className="p-6">
-                <div className="prose max-w-none whitespace-pre-wrap text-gray-700">
-                  {analysis}
+              {/* Analyzed Files - Show in print */}
+              <div className="hidden print:block mb-8">
+                <h2 className="text-xl font-semibold mb-4">Analyzed Files</h2>
+                <div className="space-y-2">
+                  {files.map((file, index) => (
+                    <div key={index} className="text-gray-600">
+                      • {file.name}
+                    </div>
+                  ))}
                 </div>
               </div>
+            
+              {/* Main Analysis Content */}
+              <div className="print:shadow-none print:border-0">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Similarities Column */}
+                  <div className="bg-white rounded-xl overflow-hidden border border-gray-200 print:border-0">
+                    <div className="p-5 bg-gradient-to-r from-green-50 to-green-100 border-b border-gray-200 print:bg-none">
+                      <div className="flex items-center gap-2 text-lg font-semibold text-gray-800">
+                        <div className="h-3 w-3 rounded-full bg-green-500"></div>
+                        Similarities
+                      </div>
+                    </div>
+                    <div className="p-6">
+                      {sampleAnalysis.similarities.map((item, index) => (
+                        <div key={index} className="mb-6 pb-6 border-b border-gray-100 last:border-0 last:mb-0 last:pb-0">
+                          <div className="grid grid-cols-1 gap-4">
+                            <div className="bg-green-50 p-3 rounded-lg">
+                              {/* <div className="text-sm text-gray-600">Document 1:</div> */}
+                              <div className="text-gray-800 mt-1">{item.text1}</div>
+                            </div>
+                            {/* <div className="bg-green-50 p-3 rounded-lg">
+                              <div className="text-sm text-gray-600">Document 2:</div>
+                              <div className="text-gray-800 mt-1">{item.text2}</div>
+                            </div> */}
+                          </div>
+                          <div className="mt-4">
+                            {renderScoreBar(item.score)}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Contradictions Column */}
+                  <div className="bg-white rounded-xl overflow-hidden border border-gray-200 print:border-0">
+                    <div className="p-5 bg-gradient-to-r from-red-50 to-red-100 border-b border-gray-200 print:bg-none">
+                      <div className="flex items-center gap-2 text-lg font-semibold text-gray-800">
+                        <div className="h-3 w-3 rounded-full bg-red-500"></div>
+                        Contradictions
+                      </div>
+                    </div>
+                    <div className="p-6">
+                      {sampleAnalysis.contradictions.map((item, index) => (
+                        <div key={index} className="mb-6 pb-6 border-b border-gray-100 last:border-0 last:mb-0 last:pb-0">
+                          <div className="grid grid-cols-1 gap-4">
+                            <div className="bg-red-50 p-3 rounded-lg">
+                              {/* <div className="text-sm text-gray-600">Document 1:</div> */}
+                              <div className="text-gray-800 mt-1">{item.text1}</div>
+                            </div>
+                            {/* <div className="bg-red-50 p-3 rounded-lg">
+                              <div className="text-sm text-gray-600">Document 2:</div>
+                              <div className="text-gray-800 mt-1">{item.text2}</div>
+                            </div> */}
+                          </div>
+                          <div className="mt-4">
+                            {renderProbabilityBar(item.probability)}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+              {/* Timestamp - Show in print */}
+              <div className="hidden print:block mt-8 pt-4 border-t text-gray-500 text-sm">
+                Report generated on: {new Date().toLocaleString()}
+              </div>
+            
+              {/* Download Report Button - Hide in print */}
+              <div className="flex justify-start mt-8 print:hidden">
+                <button 
+                  onClick={generateReport}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-xl hover:bg-gray-700 transition-all duration-200 font-medium shadow-lg hover:shadow-xl"
+                >
+                  <Printer className="h-5 w-5" />
+                  Print Report
+                </button>
+              </div>
             </div>
-          
-            {/* Timestamp - Show in print */}
-            <div className="hidden print:block mt-8 pt-4 border-t text-gray-500 text-sm">
-              Report generated on: {new Date().toLocaleString()}
-            </div>
-          
-            {/* Download Report Button - Hide in print */}
-            <div className="flex justify-start mt-8 print:hidden">
-              <button 
-                onClick={generateReport}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-xl hover:bg-gray-700 transition-all duration-200 font-medium shadow-lg hover:shadow-xl"
-              >
-                <Printer className="h-5 w-5" />
-                Print Report
-              </button>
-            </div>
-          </div>
           )}
         </div>
       </div>
