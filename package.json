@@ -20,6 +20,7 @@
     "framer-motion": "^12.4.3",
     "lucide-react": "^0.475.0",
     "mammoth": "^1.9.0",
+    "nodemon": "^3.1.10",
     "pdfjs-dist": "^5.0.375",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
