@@ -176,5 +176,7 @@ app.delete("/messages/:id", authenticate, async (req, res) => {
   }
 });
 
+// app.use('/api/researchpaper', require('./routes/researchpaper'));
+// app.use('/api/chat',         require('./routes/chat'));
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
