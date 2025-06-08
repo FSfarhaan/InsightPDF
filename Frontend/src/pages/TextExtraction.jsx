@@ -3,6 +3,7 @@ import { FileUp, FileText, Trash2, FileStack, AlignLeft, BookmarkIcon, HeadingIc
 import * as mammoth from "mammoth";
 import * as pdfjsLib from "pdfjs-dist/build/pdf";
 import axios from 'axios';
+import PDFViewer from '../component/sections/PDFViewer';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
   "node_modules/pdfjs-dist/build/pdf.worker.min.js",
@@ -306,6 +307,8 @@ const TextExtraction = () => {
         )}
       </div>
 
+      {/* <PDFViewer /> */}
+        
       {/* Document Content Area */}
       <div className="flex-1 p-6 overflow-auto">
         {isLoading ? (
@@ -330,6 +333,8 @@ const TextExtraction = () => {
           </div>
         )}
       </div>
+
+      
     </div>
   );
 };

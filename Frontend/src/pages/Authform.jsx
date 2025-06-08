@@ -63,6 +63,7 @@ const AuthForm = () => {
                 { name: inputs.sender, email: inputs.email, password: inputs.password } :
                 { email: inputs.email, password: inputs.password };
 
+                console.log("Dekhte hai jaata hai kya");
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
@@ -70,9 +71,12 @@ const AuthForm = () => {
                 },
                 body: JSON.stringify(body),
             });
+
+            console.log("gaya to hai");
+            console.log(body);
             
             const responseData = await response.json();
-            
+                
             if (!response.ok) {
                 throw new Error(responseData.message || 'Something went wrong');
             }

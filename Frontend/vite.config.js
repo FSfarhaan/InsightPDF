@@ -6,5 +6,6 @@ export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
     include: ["mammoth"],
+    include: ["pdfjs-dist/build/pdf.worker.entry"]
   }
 })

@@ -10,22 +10,25 @@ const Correlations = () => {
 
   const [analysisLocal, setAnalysisLocal] = useState("");
 
-  useEffect(() => {
-    const analysis = localStorage.getItem("analysis");
-    setAnalysis(analysis);
-  }, [])
+  // useEffect(() => {
+  //   const analysis = localStorage.getItem("analysis");
+  //   setAnalysis(analysis);
+  // }, [])
 
   // Simulated analysis results
   const sampleAnalysis = {
     similarities: [
-      { text1: "The project deadline is next week.", text2: "We need to complete this by next week.", score: 0.85 },
-      { text1: "Team morale is low.", text2: "Employee satisfaction has decreased.", score: 0.72 },
-      { text1: "Resources are limited.", text2: "We have constraints on available resources.", score: 0.68 }
+      { text1: "Both texts discuss the quick commerce sector in India, highlighting the growth and competition in the market.", score: 0.85 },
+      { text1: "Both texts mention the importance of rapid delivery services, with Blinkit and Zepto focusing on 10-minute grocery deliveries.", score: 0.72 },
+      { text1: "Both texts discuss the financial performance of the companies, with Blinkit holding a 46% market share and Zepto reporting significant revenue growth.", score: 0.68 },
+      { text1: "Both texts mention the challenges faced by the companies, including competition, regulatory scrutiny, and the need to achieve profitability.", score: 0.68 }
     ],
     contradictions: [
-      { text1: "The budget is sufficient.", text2: "We don't have enough resources.", probability: 0.9 },
-      { text1: "The timeline is feasible.", text2: "It's impossible to meet the deadline.", probability: 0.95 },
-      { text1: "Quality is our priority.", text2: "We need to rush the delivery.", probability: 0.88 }
+      { text1: "Market Share: Text 1 states that Blinkit holds a 46% share in India's quick commerce sector, while Text 2 does not provide a specific market share for Zepto, but mentions its significant revenue growth.", probability: 0.9 },
+      { text1: "Financial Performance: Text 1 states that Blinkit's adjusted core loss widened to INR 103 billion, while Text 2 reports that Zepto managed to slightly reduce its losses and improve its profit after tax as a percentage of revenue.", probability: 0.95 },
+      { text1: "Business Model: Text 1 states that Blinkit operates on a quick commerce model, utilizing a network of strategically located warehouses and dark stores to fulfill orders rapidly, whereas Text 2 does not provide detailed information about Zepto's business model.", probability: 0.88 },
+      { text1: "Acquisition: Text 1 states that Blinkit was acquired by Zomato in 2022, while Text 2 does not mention any acquisition or merger.", probability: 0.67 },
+      { text1: "IPO Plans: Text 2 states that Zepto aims to go for an IPO by 2025, while Text 1 does not mention any IPO plans for Blinkit.", probability: 0.50 }
     ]
   };
 
@@ -85,7 +88,9 @@ const Correlations = () => {
       setError('Please upload at least one file to analyze');
       return;
     }
-    setAnalysis(sampleAnalysis);
+    setTimeout(() => {
+      setAnalysis(sampleAnalysis);
+    }, 1000)
     setError('');
   };
 
@@ -245,13 +250,13 @@ const Correlations = () => {
                         <div key={index} className="mb-6 pb-6 border-b border-gray-100 last:border-0 last:mb-0 last:pb-0">
                           <div className="grid grid-cols-1 gap-4">
                             <div className="bg-green-50 p-3 rounded-lg">
-                              <div className="text-sm text-gray-600">Document 1:</div>
+                              {/* <div className="text-sm text-gray-600">Document 1:</div> */}
                               <div className="text-gray-800 mt-1">{item.text1}</div>
                             </div>
-                            <div className="bg-green-50 p-3 rounded-lg">
+                            {/* <div className="bg-green-50 p-3 rounded-lg">
                               <div className="text-sm text-gray-600">Document 2:</div>
                               <div className="text-gray-800 mt-1">{item.text2}</div>
-                            </div>
+                            </div> */}
                           </div>
                           <div className="mt-4">
                             {renderScoreBar(item.score)}
@@ -274,13 +279,13 @@ const Correlations = () => {
                         <div key={index} className="mb-6 pb-6 border-b border-gray-100 last:border-0 last:mb-0 last:pb-0">
                           <div className="grid grid-cols-1 gap-4">
                             <div className="bg-red-50 p-3 rounded-lg">
-                              <div className="text-sm text-gray-600">Document 1:</div>
+                              {/* <div className="text-sm text-gray-600">Document 1:</div> */}
                               <div className="text-gray-800 mt-1">{item.text1}</div>
                             </div>
-                            <div className="bg-red-50 p-3 rounded-lg">
+                            {/* <div className="bg-red-50 p-3 rounded-lg">
                               <div className="text-sm text-gray-600">Document 2:</div>
                               <div className="text-gray-800 mt-1">{item.text2}</div>
-                            </div>
+                            </div> */}
                           </div>
                           <div className="mt-4">
                             {renderProbabilityBar(item.probability)}

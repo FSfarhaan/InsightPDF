@@ -1,5 +1,5 @@
 import React from 'react'
-import { FolderIcon, LayoutDashboard, MessageCircle, GitGraph, Link2, BarChart } from 'lucide-react';
+import { FolderIcon, LayoutDashboard, MessageCircle, GitGraph, Link2, FileText, BarChart } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
@@ -27,9 +27,9 @@ const Sidebar = () => {
                 { label: "Chat", icon: <MessageCircle />, path: "/chat" },
                 { label: "Knowledge Graph", icon: <GitGraph />, path: "/knowledgegraph" },
                 { label: "Corelations", icon: <Link2 />, path: "/corelations" },
-                 { label: "Text Extractions", icon: <Link2 />, path: "/extract" },
-                { label: "Statistics", icon: <Link2 />, path: "/statistics" },
-                // { label: "Statistics", icon: <BarChart />, path: "/statistics" }
+                 { label: "Text Extractions", icon: <FileText />, path: "/extract" },
+                // { label: "Statistics", icon: <Link2 />, path: "/statistics" },
+                { label: "Statistics", icon: <BarChart />, path: "/statistics" }
             ].map(({ label, icon, path }) => (
                 <Link
                   key={label}

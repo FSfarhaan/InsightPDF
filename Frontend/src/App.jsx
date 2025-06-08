@@ -14,7 +14,6 @@ const Statistics = lazy(() => import("./pages/StatisticsDashboard"));
 function App() {
   const [showSiderbar, setShowSiderbar] = useState(!!localStorage.getItem("token"));
 
-
   useEffect(() => {
     function handleLogin() {
       setShowSiderbar(true);
